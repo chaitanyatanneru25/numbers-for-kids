@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ paper.title }} - Printable Worksheet</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+            padding: 20px;
+        }
+
+        .no-print-bar {
+            background: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto 24px auto;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-print {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .worksheet-page {
+            background: white;
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .ws-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .ws-title h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1e1b4b;
+        }
+
+        .ws-title p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .ws-meta-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .meta-line {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .line-blank {
+            border-bottom: 1.5px solid #64748b;
+            min-width: 140px;
+            height: 18px;
+            display: inline-block;
+        }
+
+        /* 4-column layout for math problems */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px 12px;
+        }
+
+        .problem-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 82px;
+            background: #fafafa;
+        }
+
+        .prob-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .prob-eq {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+        .prob-answer-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .ans-blank {
+            border-bottom: 2px solid #0f172a;
+            width: 55px;
+            height: 20px;
+            display: inline-block;
+            text-align: center;
+            font-weight: 800;
+            color: #16a34a;
+        }
+
+        /* Answer Key Section */
+        .answer-key-section {
+            page-break-before: always;
+            margin-top: 30px;
+        }
+
+        .key-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            font-size: 0.82rem;
+            margin-top: 15px;
+        }
+
+        .key-cell {
+            padding: 6px 8px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+        }
+
+        .key-q { color: #64748b; }
+        .key-ans { color: #047857; }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .no-print-bar {
+                display: none;
+            }
+            .worksheet-page {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Print Control Bar (Hidden when printing) -->
+    <div class="no-print-bar">
+        <div>
+            <strong>Maths for Kid - Practice Sheet</strong> ({{ paper.total_questions }} Questions)
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        </div>
+    </div>
+
+    <!-- Worksheet Container -->
+    <div class="worksheet-page">
+        <header class="ws-header">
+            <div class="ws-title">
+                <h1>{{ paper.title }}</h1>
+                <p>Includes Basic (Single Digit), Medium (Double Digit), & Advance (Triple Digit)</p>
+            </div>
+            <div class="ws-meta-box">
+                <div class="meta-line"><span>Name:</span> <span class="line-blank"></span></div>
+                <div class="meta-line"><span>Date:</span> <span class="line-blank"></span></div>
+                <div class="meta-line"><span>Time:</span> <span class="line-blank"></span></div>
+                <div class="meta-line"><span>Score:</span> <span class="line-blank" style="min-width: 60px;"></span> / {{ paper.total_questions }}</div>
+            </div>
+        </header>
+
+        <!-- Question Grid -->
+        <div class="problem-grid">
+            {% for q in paper.questions %}
+            <div class="problem-item">
+                <div class="prob-meta">
+                    <span>#{{ q.id }}</span>
+                    <span>{{ q.level|capitalize }}</span>
+                </div>
+                <div class="prob-eq">
+                    {{ q.num1 }} {{ q.symbol }} {{ q.num2 }} =
+                </div>
+                <div class="prob-answer-line">
+                    <span>Ans:</span>
+                    <span class="ans-blank">
+                        {% if show_answers %}{{ q.answer }}{% endif %}
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Separate Answer Key Section -->
+        <div class="answer-key-section page-break">
+            <header class="ws-header" style="margin-top: 20px;">
+                <div class="ws-title">
+                    <h2>Answer Key: {{ paper.title }}</h2>
+                    <p>Total {{ paper.total_questions }} Solutions</p>
+                </div>
+            </header>
+
+            <div class="key-grid">
+                {% for q in paper.questions %}
+                <div class="key-cell">
+                    <span class="key-q">{{ q.id }}.</span>
+                    <span class="key-ans">{{ q.answer }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+# ==========================================
+# Maths for Kid - Project Specific
+# ==========================================
+# User practice history & scores (generated at runtime)
+history.json
+
+# Batch-generated question papers (keep the directory, ignore generated JSONs)
+papers/*.json
+!papers/.gitkeep
+
+# Test artifacts
+test_output_papers/
+
+# ==========================================
+# Python Bytecode & Cache
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ==========================================
+# Virtual Environments
+# ==========================================
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ==========================================
+# IDE & Code Editors
+# ==========================================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# Operating System Files
+# ==========================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
